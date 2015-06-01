@@ -1,0 +1,102 @@
+
+<html>
+<head>
+<title> Project 2 Instructions </title>
+<script src="../processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+PFont happy;
+PFont awesome;
+
+PImage heart;
+PImage snow;
+PImage anna;
+PImage arrow1;
+PImage arrow2;
+PImage space;
+PImage clock;
+PImage up;
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+	happy = loadFont("Because I am Happy");
+	awesome = loadFont("Mf Really Awesome");
+	
+	heart = loadImage("image/heart.png");
+	snow = loadImage("image/snow.png");
+	anna = loadImage("image/anna.png");
+	arrow1 = loadImage("image/keyboard.jpg");
+	space = loadImage("image/spacebar.png");
+	clock = loadImage("image/clock.png");
+	up = loadImage("image/up.png");
+	
+}  
+
+void draw()
+{
+	background(236,174,187);
+	
+ //Title
+ 	textFont(happy,100);
+	fill(255,255,255);
+	text("Find Your LOVE", 300,100);
+	
+//Instruction
+	textFont(awesome,50);
+	text("INSTRUCTIONS", 80,200);
+	image(heart,30,160,40,40);
+	
+//Part 1
+	image(snow,25,220,180,200);
+	image(anna,1000,180,190,240);
+
+	textFont(awesome,40);
+	text("You will be one of the disney characters.",230,300);
+	text("You will need to help the characters to find their love.",230,350);
+	
+//Part 2
+	image(arrow1,1030,460,140,100);
+	text("Press I and K key on your keyboard to move the character.",30,500);
+
+	image(space,30,515,200,60);
+	text("Use the space bar to show your love (shoot the heart).",250,555);
+	
+//Part 3
+	image(clock,990,590,200,200);
+	image(up,820,610,180,180);
+	text("Every stage, you must make certain number of",30,660);
+	text("successful shots in 20 seconds.",30,710);
+	text("As you enter next stage, number of targets will increase.",30,760);
+	
+//Go Back to Main Menu	
+	fill(236,174,187);
+	rect(920,820,250,50);
+
+	fill(0,0,0);
+	text("Go Back to Menu",930,860);
+	
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 920 && mouseX < 1170 && mouseY > 820 && mouseY < 890)
+			{
+				link("Main_Menu.html");
+			}
+		}
+
+}
+	
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
+

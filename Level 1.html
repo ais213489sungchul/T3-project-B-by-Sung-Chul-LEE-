@@ -1,0 +1,393 @@
+<html>
+<head>
+<title> Project 2 Game </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+PImage deer[] = new PImage[6];
+int n;
+int time;
+int xposition;
+int startTime;
+int endTime;
+
+
+PFont awesome;
+PImage creators;
+PImage prince;
+PImage snow;
+PImage heart;
+
+PImage wallpaper;
+
+int moveHeart;
+int stopHeart;
+
+int movePrince;
+int stopPrince;
+
+int moveCreator;
+int stopCreator;
+int stopCreator2;
+
+int creatorY;
+int creatorX;
+
+int random1;
+int timer;
+
+int stopSnow;
+int stopSnow2;
+int moveSnow;
+
+int snowY;
+int snowX;
+
+int initialTime = 0;
+int newSecond = 0;
+int stopTime;
+int q = 0;
+int minuteMultiplier = 0;
+int reversedTime = 0;
+boolean recordTime = false;
+boolean nextMinute = true;	
+
+int soundNo1;
+int prince_before_hit;
+int counter;
+int heartNumber;
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+	awesome = loadFont("Mf Really Awesome");
+	
+	prince = loadImage("image/prince.gif");
+	snow = loadImage("image/snow.png");
+	heart = loadImage("image/heart.png");
+	wallpaper = loadImage("image/snow White Wallpaper_G.jpg")
+	creator = loadImage("image/creator.png")
+	
+	moveHeart = 80;
+	stopHeart = 0;
+	heartNumber = 0;
+	
+	movePrince = 100;
+	stopPrince = 0;
+	
+	random1 = random(5,10);
+	
+	stopSnow = 0;
+	stopSnow2 = 0;
+	moveSnow = 300;
+	snowY = 140;
+	
+	stopCreator = 0;
+	stopCreator2 = 0;
+	moveCreator = 100;
+	creatorY = 600; 
+	
+	soundNo1 = 0;
+	counter = 0;
+	prince_before_hit = 0;	
+	
+    n = 1;
+    while(n <= 6)
+	{
+		deer[n] = loadImage("Animation/deer "+n+".png");
+		n = n + 1;
+	}
+
+	time = 0;
+	
+	xposition = 10;
+
+}  
+
+void draw()
+{
+	background(236,174,187);
+	image(wallpaper,0,0,1250,900);
+	
+//Deer
+
+	n = 1;
+	startTime = 0;
+	endTime = 5;
+	
+	while(n <= 3)
+	{
+		if(time >= startTime && time <= endTime)
+			{
+				image(deer[n],xposition,800,150,100);
+			}
+		xposition = xposition + 2;
+		n = n + 1;
+		startTime = startTime + 5;
+		endTime = endTime + 5;
+	
+	}
+
+	if(time >= 15)
+	{
+		time = 0;
+	}
+	
+	time = time + 1;
+	
+	if(xposition > 1100)
+	{
+		xposition = 0;
+	}
+	
+			
+//Title
+
+	fill(255,255,255);
+	textFont(awesome,100);
+	text("Level 1", 50,110);
+
+//Timer
+
+	fill(255,255,255);
+	textFont(awesome,60);
+	text("Target: 8        "+counter+" Hearts / Time " + reversedTime,500,70);
+	
+
+	if (second() == 0)
+	{
+   		 if (q == 0)
+   		 {
+      		 minuteMultiplier = minuteMultiplier + 1;
+     	     q = 5;
+    	 }
+	 }
+
+    if (recordTime == false)
+		{
+			recordTime = true;
+			initialTime = second();
+		}
+	
+    newSecond = minuteMultiplier*60 + second() - initialTime;
+    reversedTime = 30 - newSecond;
+    
+    fill(255);
+    textSize(120);
+	text(reversedTime,1335,110);
+	 
+	 if(reversedTime<=9)
+		 {
+		 	stroke(255);
+			strokeWeight(5);
+			fill(0);
+			rect(1320,0,200,150);
+			fill(255);
+			text(reversedTime,1380,110);
+		 }
+
+//Moving Prince
+
+	if(prince_before_hit == 0)
+	{
+		image(prince,920,movePrince,150,200);
+	
+		if(movePrince > 650)
+			{
+				stopPrince = 1;
+			}
+		
+		if(stopPrince == 1)
+			{
+				movePrince = movePrince - random1;
+			}
+	
+		if(movePrince < 100)
+			{
+				stopPrince = 0;
+			}
+		
+
+		if(stopPrince == 0)
+			{
+				movePrince = movePrince + random1;
+			}
+	}
+
+
+
+//Shoot heart
+
+	if(moveHeart > 1250)
+		{
+			if (keyPressed == true && key == ' ')
+				{
+					moveHeart = 80;
+				}
+		}
+			
+	if(stopHeart == 1)
+		{
+	    	image(heart,moveHeart,snowY,80,80);	
+	    	image(heart,moveHeart,creatorY,80,80);
+			moveHeart = moveHeart + 90;
+		}
+		
+	if (keyPressed == true && key == ' ')
+		{	
+			stopHeart = 1;
+		}
+			
+	
+
+//Moving Snow White
+image(snow,30,snowY,160,180);
+	
+	if (stopSnow == 0)
+	{
+		if(keyPressed == true)
+		{
+			if(key == 'i')
+			{
+				if(snowY > 150)
+				{
+					snowY = snowY - 22;
+				}
+			}
+		}
+	}
+	
+	if (stopSnow == 0)
+		{
+			if(keyPressed == true)
+			{
+				if(key == 'k')
+				{
+					if (snowY < 650)
+					{
+						snowY = snowY + 22;
+					}
+				}
+			}	
+		}
+
+//Moving Creator
+image(creator,snowX,creatorY,160,180);
+
+    if (stopCreator == 0)
+	{
+		if(keyPressed == true)
+		{
+			if(key == 'w')
+			{
+				if(creatorY > 150)
+				{
+					creatorY = creatorY - 22;
+				}
+			}
+		}
+	}
+	
+	if (stopCreator == 0)
+		{
+			if(keyPressed == true)
+			{
+				if(key == 's')
+				{
+					if (creatorY < 650)
+					{
+						creatorY = creatorY + 22;
+					}
+				}
+			}	
+		}
+
+//Prince Got Hit!! (Sound)
+
+     d1 = (int)sqrt(sq(920-moveHeart)+sq(movePrince-snowY+80));
+     d2 = (int)sqrt(sq(920-moveHeart)+sq(movePrince-creatorY+80));
+    
+    if(soundNo1 == 0)
+    {
+		if(d1  < 100)
+		{
+			soundManager.play('s0');
+			soundNo1 = 1;
+		}
+		
+		if(d2  < 100)
+		{
+			soundManager.play('s0');
+			soundNo1 = 1;
+		}
+	}
+	
+	if(moveHeart > 1250)
+	{
+		soundNo1 = 0;
+		heartNumber = 0;
+	}
+
+	time >= startTime && time <= endTime
+	
+//Heart number
+
+		if(heartNumber == 0)
+		{
+			if(d1  < 100)
+			{
+				counter = counter + 1;
+				heartNumber = 1;
+			}
+		
+		
+		if(heartNumber == 0)
+			{
+			if(d2 < 100)
+				{
+				counter = counter + 1;
+				heartNumber = 1;
+				}
+			}
+		}	
+//Win or Lost page
+
+	if(counter < 8)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Lost.html")
+		}
+	}	
+	
+	if(counter >= 8)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Won.html")
+		}
+	}
+	
+	
+		
+}
+	
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

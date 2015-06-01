@@ -1,0 +1,86 @@
+
+<html>
+<head>
+<title> Project 2 You Lost_frozen </title>
+<script src="../processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+PFont awesome;
+
+PImage wallpaper;
+
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+	awesome = loadFont("Mf Really Awesome");
+	
+	wallpaper = loadImage("image/lost frozen.jpg");
+	
+	
+}  
+
+void draw()
+{
+	image(wallpaper,0,0,1250,900);
+	
+	//Replay box
+	noFill();
+	strokeWeight(10);
+	stroke(204,229,255);
+	rect(650,400,260,100);
+	
+	//Replay text
+	textFont(awesome,80);
+	fill(204,229,255);
+	text("REPLAY",690,480);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 650 && mouseX < 910 && mouseY > 400 && mouseY < 500)
+				{
+					link("Level 3.html");
+				}
+		}
+	
+	
+	//Exit box
+	noFill();
+	strokeWeight(10);
+	stroke(204,255,255);
+	rect(940,400,240,100);
+	
+	//Exit Text
+	fill(204,255,255);
+	textFont(awesome,80);
+	text("EXIT",1000,480);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 940 && mouseX < 1180 && mouseY > 400 && mouseY < 500)
+				{
+					link("welcome.html");
+				}
+		}
+	
+	//You lost Text 
+	fill(250,250,250);
+	textFont(awesome,100);
+
+	//Other Text
+	text("You Just Lost",630,230);
+	text("The Game !",690,330);
+	
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
+

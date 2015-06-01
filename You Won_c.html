@@ -1,0 +1,94 @@
+
+<html>
+<head>
+<title> Project 2 You Won </title>
+<script src="../processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+PFont awesome;
+
+PImage wall;
+
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+	awesome = loadFont("Mf Really Awesome");
+	
+	wall = loadImage("image/cinderella wall_win.jpg");
+	
+	
+}  
+
+void draw()
+{
+	background(0,174,0);
+	image(wall,0,0,1250,900);
+	
+	//Restart box
+	noFill();
+	strokeWeight(10);
+	stroke(73,144,214);
+	rect(800,500,350,100);
+	
+	
+	//Restart text
+	textFont(awesome,80);
+	fill(73,144,214);
+	text("NEXT LEVEL",820,580);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 800 && mouseX < 1150 && mouseY > 500 && mouseY < 600)
+				{
+					link("Level 3.html");
+				}
+		}
+	
+	
+	//Exit box
+	noFill();
+	strokeWeight(10);
+	stroke(73,179,214);
+	rect(825,660,300,100);
+	
+	//Exit Text
+	fill(73,179,214);
+	textFont(awesome,80);
+	text("EXIT",900,740);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 825 && mouseX < 1125 && mouseY > 660 && mouseY < 760)
+				{
+					link("welcome.html");
+				}
+		}
+	
+	
+	
+	//You lost Text 
+	fill(250,250,250);
+	textFont(awesome,100);
+	
+	fill(0,0,0);
+	text("You Just WON", 670,250);
+	text("The Game !", 720,350);
+	
+	fill(255,20,147);
+	text("Congratulations!",650,150);
+	
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
+

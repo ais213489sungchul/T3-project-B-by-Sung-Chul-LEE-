@@ -1,0 +1,89 @@
+
+<html>
+<head>
+<title> Project 2 You Lost </title>
+<script src="../processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+PFont happy;
+PFont awesome;
+
+PImage wall;
+
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+   	happy = loadFont("Because I am Happy");
+	awesome = loadFont("Mf Really Awesome");
+	
+	wall = loadImage("image/cinderella wall_loose.jpg");
+	
+}  
+
+void draw()
+{
+	background(0,174,0);
+	image(wall,0,0,1250,900);
+	
+//Restart box
+	noFill();
+	strokeWeight(10);
+	stroke(73,179,214);
+	rect(800,350,300,100);
+	
+//Restart text
+	textFont(awesome,80);
+	fill(73,179,214);
+	text("RESTART",840,430);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 800 && mouseX < 1100 && mouseY > 350 && mouseY < 450)
+				{
+					link("Level 2.html");
+				}
+		}
+	
+	
+//Exit box
+	noFill();
+	strokeWeight(10);
+	stroke(204,255,255);
+	rect(800,500,300,100);
+	
+//Exit Text
+	fill(204,255,255);
+	textFont(awesome,80);
+	text("EXIT",880,580);
+	if (mousePressed == true && mouseButton == LEFT)
+		{
+			if (mouseX > 800 && mouseX < 1100 && mouseY > 500 && mouseY < 600)
+				{
+					link("welcome.html");
+				}
+		}
+	
+	
+//You lost Text 
+	fill(250,250,250);
+	textFont(awesome,100);
+	text("You Just LOST", 130,250);
+	text("The Game !", 200,350);
+	
+}
+	
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
+

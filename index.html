@@ -1,0 +1,132 @@
+<html>
+<head>
+<title> Welcome </title>
+<script src="processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents ="true"; */
+
+PImage angel[] = new angel[4];
+PImage love[] = new love[7];
+
+PImage backgroundImage;
+int n;
+int startTime;
+int endTime;
+int time;
+
+int n2;
+int startTime2;
+int endTime2;
+int time2;
+
+
+void setup(){
+
+size (1250,900);
+background (176,176,176);
+frameRate (30);
+
+backgroundImage = loadImage("image/Welcome Final Image.jpg")
+
+	
+	n = 1;
+	while(n <= 4)
+	{
+		angel[n] = loadImage("Animation/angel "+n+".png");
+		n = n + 1;
+	}
+	
+	time = 0;
+	
+	n2 = 1;
+	while(n2 <= 7)
+	{
+		love[n2] = loadImage("Animation/"+n2+".png")
+		n2 = n2 + 1;
+	}
+	
+	time2 = 0;
+	
+}
+
+
+void draw()
+{
+
+background (176,176,176);
+
+//background
+
+image(backgroundImage,0,0,1250,900);
+
+//Animation Angel
+
+	n = 1;
+	startTime = 0;
+	endTime = 5;
+	while(n <= 4)
+	{
+		if(time >= startTime && time < endTime)
+		{
+			image(angel[n],620,820);
+		}	
+		
+		 n = n + 1;
+		 startTime = startTime + 5;
+		 endTime = endTime + 5;
+	}
+	
+	time = time + 1;
+	
+	if(time >= 20)
+	{
+		time = 0;
+	}
+	
+	
+//Animation Love
+
+	n2 = 1;
+	startTime2 = 0;
+	endTime2 = 10;
+	while(n2 <= 7)
+	{
+		if(time2 >= startTime2 && time2 < endTime2)
+		{
+			image(love[n2],750,320);
+		}	
+		
+		 n2 = n2 + 1;
+		 startTime2 = startTime2 + 10;
+		 endTime2 = endTime2 + 10;
+	}
+	
+	time2 = time2 + 1;
+	
+	if(time2 >= 70)
+	{
+		time2 = 0;
+	}
+
+//link to Main Menu
+
+	if (keyPressed == true)
+	{
+		if (key == ' ')
+		{
+			link("Main_Menu.html");
+		}
+	}
+
+
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

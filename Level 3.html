@@ -1,0 +1,328 @@
+<html>
+<head>
+<title> Project 2 Game </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+PImage snow[] = new PImage[2];
+int n;
+int time;
+int xposition;
+int startTime;
+int endTime;
+
+PFont happy;
+PFont awesome;
+
+PImage anna;
+PImage elsa;
+PImage snow;
+
+PImage wallpaper;
+
+int moveSnowFlake;
+int stopSnowFlake;
+
+int moveAnna;
+int stopAnna;
+
+int random1;
+int timer;
+
+int stopElsa;
+int stopElsa2;
+int moveElsa;
+
+int elsaY;
+int elsaX;
+
+int initialTime = 0;
+int newSecond = 0;
+int stopTime;
+int q = 0;
+int minuteMultiplier = 0;
+int reversedTime = 0;
+boolean recordTime = false;
+boolean nextMinute = true;	
+
+int soundNo1;
+int anna_before_hit;
+int counter;
+int snowNumber;
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+   	happy = loadFont("Because I am Happy");
+	awesome = loadFont("Mf Really Awesome");
+	
+	anna = loadImage("image/anna.png");
+	elsa = loadImage("image/elsa.png");
+	snow = loadImage("image/snowflake.png");
+	wallpaper = loadImage("image/elsa wallpaper_G.jpg")
+	
+	moveSnowFlake = 80;
+	stopSnowFlake = 0;
+	snowNumber = 0;
+	
+	moveAnna = 100;
+	stopAnna = 0;
+	
+	random1 = random(15,18);
+	
+	stopElsa = 0;
+	stopElsa2 = 0;
+	moveElsa = 300;
+	elsaY = 140;
+	
+	soundNo1 = 0;
+	counter = 0;
+	anna_before_hit = 0;	
+	
+	n = 1;
+    while(n <= 8)
+	{
+		snow[n] = loadImage("Animation/snow "+n+".png");
+		n = n + 1;
+	}	
+	
+	time = 0;
+	
+	xposition = 10;
+	
+}  
+
+void draw()
+{
+	background(236,174,187);
+	image(wallpaper,0,0,1250,900);
+	
+//snow flakes
+
+	n = 1;
+	startTime = 0;
+	endTime = 4;
+	
+	while(n <= 2)
+	{
+		if(time >= startTime && time <= endTime)
+			{
+				image(snow[n],xposition,800);
+			}
+			
+		xposition = xposition + 4;
+		n = n + 1;
+		startTime = startTime + 4;
+		endTime = endTime + 4;
+	}
+
+	if(time > 4)
+	{
+		time = 0;
+	}
+	
+	time = time + 1;
+	
+	if(xposition > 1100)
+	{
+		xposition = 0;
+	}			
+			
+//Title
+	fill(255,255,255);
+	textFont(awesome,100);
+	text("Level 3", 50,110);
+
+//Timer
+	fill(255,255,255);
+	textFont(awesome,60);
+	text("Target: 15        "+counter+" Snowflakes / Time " + reversedTime,420,70);
+	
+
+	if (second() == 0)
+	{
+   		 if (q == 0)
+   		 {
+      		 minuteMultiplier = minuteMultiplier + 1;
+     	     q = 5;
+    	 }
+	 }
+
+    if (recordTime == false)
+		{
+			recordTime = true;
+			initialTime = second();
+		}
+	
+    newSecond = minuteMultiplier*60 + second() - initialTime;
+    reversedTime = 20 - newSecond;
+    
+    fill(255);
+    textSize(120);
+	text(reversedTime,1335,110);
+	 
+	 if(reversedTime<=9)
+		 {
+		 	stroke(255);
+			strokeWeight(5);
+			fill(0);
+			rect(1320,0,200,150);
+			fill(255);
+			text(reversedTime,1380,110);
+		 }
+
+//Moving Anna
+
+	if(anna_before_hit == 0)
+	{
+		image(anna,920,moveAnna,180,180);
+	
+		if(moveAnna > 650)
+			{
+				stopAnna = 1;
+			}
+		
+		if(stopAnna == 1)
+			{
+				moveAnna = moveAnna - random1;
+			}
+	
+		if(moveAnna < 100)
+			{
+				stopAnna = 0;
+			}
+		
+
+		if(stopAnna == 0)
+			{
+				moveAnna = moveAnna + random1;
+			}
+	}
+
+
+
+//Shoot heart
+	if(moveSnowFlake > 1250)
+		{
+			if (keyPressed == true && key == ' ')
+				{
+					moveSnowFlake = 80;
+				}
+		}
+			
+	if(stopSnowFlake == 1)
+		{
+	    	image(snow,moveSnowFlake,elsaY,80,80);	
+			moveSnowFlake = moveSnowFlake + 90;
+		}
+		
+	if (keyPressed == true && key == ' ')
+		{	
+			stopSnowFlake = 1;
+		}
+
+
+//Moving Snow White
+
+	image(elsa,30,elsaY,160,180);
+	if (stopElsa == 0)
+	{
+		if(keyPressed == true)
+		{
+			if(key == 'i')
+			{
+				if(elsaY > 150)
+				{
+					elsaY = elsaY - 22;
+				}
+			}
+		}
+	}
+
+	if (stopElsa == 0)
+		{
+			if(keyPressed == true)
+			{
+				if(key == 'k')
+				{
+					if (elsaY < 650)
+					{
+						elsaY = elsaY + 22;
+					}
+				}
+			}	
+		}
+
+
+//Anna Got Hit!!
+
+     d1 = (int)sqrt(sq(920-moveSnowFlake)+sq(moveAnna-elsaY+50));
+    
+    if(soundNo1 == 0)
+    {
+		if(d1 < 100)
+		{
+			soundManager.play('s2');
+			soundNo1 = 1;
+		}
+	}
+	
+	if(moveSnowFlake > 1250)
+	{
+		soundNo1 = 0;
+		snowNumber = 0;
+	}
+
+
+//Heart number
+
+	if(snowNumber == 0)
+			{
+				if(d1 < 100)
+					{
+						counter = counter + 1;
+						snowNumber = 1;
+					
+					}
+			}
+	
+
+//Win or Lost page
+		
+	if(counter < 15)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Lost_Frozen.html")
+		}
+	}	
+	
+	if(counter >= 15)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Won_Frozen.html")
+		}
+	}
+		
+}
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

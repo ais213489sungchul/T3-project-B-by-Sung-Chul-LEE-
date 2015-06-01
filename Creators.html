@@ -1,0 +1,103 @@
+<html>
+<head>
+<title> Creators </title>
+<script src="processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents ="true"; */
+
+void setup(){
+
+size(1250,900);
+
+frameRate( 30 );
+
+Happy = loadFont("Because I am Happy");
+Awesome = loadFont("Mf Really Awesome");
+
+}
+
+
+void draw()
+{
+background(236,174,187);
+
+//Title
+
+ 	textFont(Happy,100);
+	fill(300,300,300);
+	text("Find Your Love",300,100);
+	
+//Soo-Jin
+
+ 	textFont(Awesome,80);
+	fill(0,0,0);
+	text("Soo Jin",80,240);
+	
+ 	textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- founder of cooperation",320,230);
+	
+ 	textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- Programming manager",320,280);	
+	
+	 textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- Art department manager",320,330);
+
+//Hyun-Joo
+
+ 	textFont(Awesome,80);
+	fill(0,0,0);
+	text("Hyun Joo",500,460);
+	
+ 	textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- founder of cooperation",790,450);
+	
+ 	textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- Programming manager",790,500);	
+	
+	 textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- Art department manager",790,550);
+
+//Help
+
+ 	textFont(Awesome,80);
+	fill(0,0,0);
+	text("Mr. Leung",80,680);
+	
+	textFont(Awesome,40);
+	fill(0,0,0);	
+	text("- Supervisor of cooperation",350,670);
+
+//BACK Button
+	
+	fill(236,174,187);
+	rect(920,790,250,50);
+	
+	 textFont(Awesome,40);
+	fill(0,0,0);
+	text("Go Back to Menu",930,830);
+	
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 920 && mouseX < 1170 && mouseY > 790 && mouseY < 840)
+			{
+				link("Main_Menu.html");
+			}
+		}
+
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<html>
+<head>
+<title> Project 2 Game </title>
+
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+PImage pumpkins[] = new PImage[8];
+int n;
+int time;
+int xposition;
+int startTime;
+int endTime;
+
+PFont happy;
+PFont awesome;
+
+PImage prince;
+PImage cinderella;
+PImage heels;
+
+PImage wallpaper;
+
+int moveHeels;
+int stopHeels;
+
+int movePrince;
+int stopPrince;
+
+int random1;
+int timer;
+
+int stopCind;
+int stopCind2;
+int moveCind;
+
+int cindY;
+int cindX;
+
+int initialTime = 0;
+int newSecond = 0;
+int stopTime;
+int q = 0;
+int minuteMultiplier = 0;
+int reversedTime = 0;
+boolean recordTime = false;
+boolean nextMinute = true;	
+
+int soundNo1;
+int prince_before_hit;
+int counter;
+int heelsNumber;
+	
+void setup()
+{  
+    size( 1250, 900 );   
+    frameRate( 30 );
+   
+   	happy = loadFont("Because I am Happy");
+	awesome = loadFont("Mf Really Awesome");
+	
+	prince = loadImage("image/cindPrince.png");
+	cinderella = loadImage("image/cinderella.png");
+	heels = loadImage("image/heels.png");
+	wallpaper = loadImage("image/cindWall1.jpg");
+	
+	moveHeels = 80;
+	stopHeels = 0;
+	heelsNumber = 0;
+	
+	movePrince = 100;
+	stopPrince = 0;
+	
+	random1 = random(10,15);
+	
+	stopCind = 0;
+	stopCind2 = 0;
+	moveCind = 300;
+	cindY = 140;
+	
+	soundNo1 = 0;
+	counter = 0;
+	prince_before_hit = 0;	
+	
+    n = 1;
+    while(n <= 8)
+	{
+		pumpkins[n] = loadImage("Animation/pumpkins "+n+".png");
+		n = n + 1;
+	}	
+	
+	time = 0;
+	
+	xposition = 10;
+	
+}  
+
+void draw()
+{
+	background(5,15,135);
+	image(wallpaper,0,0,1250,900);
+			
+//Pumpkins
+
+	n = 1;
+	startTime = 0;
+	endTime = 2;
+	
+	while(n <= 8)
+	{
+		if(time >= startTime && time <= endTime)
+			{
+				image(pumpkins[n],xposition,740);
+			}
+			
+		xposition = xposition + 1;
+		n = n + 1;
+		startTime = startTime + 2;
+		endTime = endTime + 2;
+	}
+
+	if(time >= 16)
+	{
+		time = 0;
+	}
+	
+	time = time + 1;	
+	
+		if(xposition > 1100)
+	{
+		xposition = 0;
+	}		
+			
+//Title
+	fill(255,255,255);
+	textFont(awesome,100);
+	text("Level 2", 50,110);
+
+//Timer
+	fill(255,255,255);
+	textFont(awesome,60);
+	text("Target: 10          "+counter+" Heels / Time " + reversedTime,500,70);
+	
+
+	if (second() == 0)
+	{
+   		 if (q == 0)
+   		 {
+      		 minuteMultiplier = minuteMultiplier + 1;
+     	     q = 5;
+    	 }
+	 }
+
+    if (recordTime == false)
+		{
+			recordTime = true;
+			initialTime = second();
+		}
+	
+    newSecond = minuteMultiplier*60 + second() - initialTime;
+    reversedTime = 20 - newSecond;
+    
+    fill(255);
+    textSize(120);
+	text(reversedTime,1335,110);
+	 
+	 if(reversedTime<=9)
+		 {
+		 	stroke(255);
+			strokeWeight(5);
+			fill(0);
+			rect(1320,0,200,150);
+			fill(255);
+			text(reversedTime,1380,110);
+		 }
+
+//Moving Prince
+
+	if(prince_before_hit == 0)
+	{
+		image(prince,920,movePrince,170,200);
+	
+		if(movePrince > 650)
+			{
+				stopPrince = 1;
+			}
+		
+		if(stopPrince == 1)
+			{
+				movePrince = movePrince - random1;
+			}
+	
+		if(movePrince < 100)
+			{
+				stopPrince = 0;
+			}
+		
+
+		if(stopPrince == 0)
+			{
+				movePrince = movePrince + random1;
+			}
+	}
+
+//Shoot heels
+
+	if(moveHeels > 1250)
+		{
+			if (keyPressed == true && key == ' ')
+				{
+					moveHeels = 80;
+				}
+		}
+			
+	if(stopHeels == 1)
+		{
+	    	image(heels,moveHeels,cindY,80,80);	
+			moveHeels = moveHeels + 90;
+		}
+		
+	if (keyPressed == true && key == ' ')
+		{	
+			stopHeels = 1;
+		}
+		
+			
+//Moving Cinderella
+
+image(cinderella,30,cindY,145,180);
+	
+	if (stopCind == 0)
+	{
+		if(keyPressed == true)
+		{
+			if(key == 'i')
+			{
+				if(cindY > 150)
+				{
+					cindY = cindY - 22;
+				}
+			}
+		}
+	}
+	
+	if (stopCind == 0)
+		{
+			if(keyPressed == true)
+			{
+				if(key == 'k')
+				{
+					if (cindY < 650)
+					{
+						cindY = cindY + 22;
+					}
+				}
+			}	
+		}
+
+
+//Prince Got Hit!!
+
+     d1 = (int)sqrt(sq(920-moveHeels)+sq(movePrince-cindY+50));
+    
+    if(soundNo1 == 0)
+    {
+		if(d1 < 100)
+		{
+			soundManager.play('s1');
+			soundNo1 = 1;
+		}
+	}
+	
+	if(moveHeels > 1250)
+	{
+		soundNo1 = 0;
+		heelsNumber = 0;
+	}	
+
+//Heels number
+
+if(heelsNumber == 0)
+		{
+			if(d1 < 100)
+				{
+					counter = counter + 1;
+					heelsNumber = 1;
+					
+				}
+		}
+		
+		
+//Win or Lost page
+		
+	if(counter < 10)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Lost_c.html");
+		}
+	}	
+	
+	if(counter >= 10)
+	{
+		if(reversedTime<=0)
+		{
+			link("You Won_c.html");
+		}
+	}
+		
+}
+
+
+	
+
+	
+	
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

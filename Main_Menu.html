@@ -1,0 +1,126 @@
+<html>
+<head>
+<title> Main_Menu </title>
+<script src="processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+PImage backgroundImage;
+
+PImage toro [] = new PImage [8];
+int n;
+int time;
+int xposition;
+int startTime;
+int endTime;
+
+void setup(){
+
+size( 1250, 900 );
+background(176,176,176);
+frameRate( 30 );
+
+backgroundImage = loadImage("image/Main_Menu.jpg");
+
+counter = loadFont("Counter-Strike");
+
+
+ n = 1;
+    while(n <= 8)
+	{
+		toro[n] = loadImage("Animation/toro "+n+".png");
+		n = n + 1;
+	}
+
+	time = 0;
+	
+	xposition = 10;
+
+
+}
+
+
+
+void draw()
+{
+
+background(176,176,176);
+image(backgroundImage,0,0,1250,900);
+
+//Click the image! text 
+
+ 	textFont(counter,100);
+	fill(0,0,0);
+	text("click the image!",350,100);
+
+//Background
+
+	image(backgroundImage,0,0,1250,900);
+	
+//Play Level 1 
+
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 710 && mouseX < 1035 && mouseY > 125 && mouseY < 265)
+			{
+				link("Level 1.html");
+			}
+		}
+
+// Instructions 
+
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 710 && mouseX < 1035 && mouseY > 295 && mouseY < 435)
+			{
+				link("Instruction.html");
+			}
+		}
+
+//Creators 
+
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 710 && mouseX < 1035 && mouseY > 465 && mouseY < 605)
+			{
+				link("Creators.html");
+			}
+		}
+//dear
+
+	n = 1;
+	startTime = 0;
+	endTime = 5;
+	
+	while(n <= 3)
+	{
+		if(time >= startTime && time <= endTime)
+			{
+				image(toro[n],xposition,800,150,100);
+			}
+		xposition = xposition + 2;
+		n = n + 1;
+		startTime = startTime + 5;
+		endTime = endTime + 5;
+	
+	}
+
+//Exit
+
+	if (mousePressed == true && mouseButton == LEFT)
+   		{
+			if (mouseX > 710 && mouseX < 1035 && mouseY > 625 && mouseY < 765)
+			{
+				link("welcome.html");
+			}
+		}
+		
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
